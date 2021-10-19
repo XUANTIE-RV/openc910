@@ -23,7 +23,7 @@
 ```
 $ cd C910_RTL_FACTORY
 $ source setup/setup.csh
-$ cd ../
+$ cd ../smart_run
 $ make help
 To gain more information about how to use smart testbench.
 ```
