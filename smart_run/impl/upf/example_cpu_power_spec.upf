@@ -1,0 +1,148 @@
+/*Copyright 2019-2021 T-Head Semiconductor Co., Ltd.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+set_design_top tb/x_soc
+set_design_attributes -models {ct_ifu_icache_if  \
+                               ct_lsu_dcache_top}  \
+                      -attribute {UPF_dont_touch TRUE}
+
+## CREATE POWER DOMAIS
+######################
+create_power_domain PD_TOP
+create_power_domain PD_CPU -elements x_cpu_sub_system_axi
+
+## TOPLEVEL CONNECTIONS
+#######################
+# VDD
+create_supply_port VDD 
+create_supply_net  VDD   -domain PD_TOP
+connect_supply_net VDD   -ports VDD
+
+create_supply_port VSS 
+create_supply_net  VSS   -domain PD_TOP
+create_supply_net  VSS   -domain PD_CPU -reuse
+connect_supply_net VSS   -ports VSS
+
+# VDDG
+create_supply_port VDD_CPU 
+create_supply_net  VDD_CPU   -domain PD_TOP
+create_supply_net  VDD_CPU   -domain PD_CPU -reuse
+connect_supply_net VDD_CPU   -ports VDD_CPU
+create_supply_net  VDD_CPU_SW  -domain PD_CPU
+
+## PRIMARY POWER NETS
+#####################
+set_domain_supply_net PD_TOP  -primary_power_net VDD        -primary_ground_net VSS
+set_domain_supply_net PD_CPU  -primary_power_net VDD_CPU_SW -primary_ground_net VSS
+
+
+## PD_CPU power domain SETUP 
+########################################
+create_power_switch cpu_sw \
+  -domain PD_CPU \
+  -input_supply_port {in VDD_CPU} \
+  -output_supply_port {out VDD_CPU_SW} \
+  -control_port {pmu_cpu_pwr_on pmu_cpu_pwr_on} \
+  -on_state {vdd_cpu_on_state in {pmu_cpu_pwr_on}}
+
+#  -off_state {vdd_cpu_off_state  {!pmu_cpu_pwr_on}} \
+
+# INPUT ISO
+########################################
+set_isolation pd_cpu_iso_in_0 \
+  -domain PD_CPU \
+  -isolation_power_net VDD -isolation_ground_net VSS \
+  -clamp_value 0 \
+  -applies_to inputs
+
+set_isolation_control pd_cpu_iso_in_0 \
+  -domain PD_CPU \
+  -isolation_signal pmu_cpu_iso_in \
+  -isolation_sense high \
+  -location parent
+
+# OUTPUT ISO
+########################################
+set_isolation pd_cpu_iso_out_0 \
+  -domain PD_CPU \
+  -isolation_power_net VDD -isolation_ground_net VSS \
+  -clamp_value 0 \
+  -applies_to outputs
+
+set_isolation_control pd_cpu_iso_out_0 \
+  -domain PD_CPU \
+  -isolation_signal pmu_cpu_iso_out \
+  -isolation_sense high \
+  -location parent
+
+# set_isolation pd_cpu_iso_out_1 \
+#   -domain PD_CPU \
+#   -isolation_power_net VDD -isolation_ground_net VSS \
+#   -clamp_value 1 \
+#   -applies_to outputs \
+#   -elements x_cpu_sub_system_axi/tdt_dm_pad_ndmreset_n \
+# 
+# set_isolation_control pd_cpu_iso_out_1 \
+#   -domain PD_CPU \
+#   -isolation_signal pmu_cpu_iso_out \
+#   -isolation_sense high \
+#   -location parent
+
+# DON't ISOLATE
+########################################
+set_isolation pd_cpu_iso_in_reset \
+  -domain PD_CPU \
+  -applies_to inputs \
+  -elements {x_cpu_sub_system_axi/pad_cpu_rst_b  \
+             x_cpu_sub_system_axi/pad_had_jtg_trst_b  \
+             } \
+  -no_isolation
+
+# x_cpu_sub_system_axi/pad_core0_dbgrq_b  \
+# x_cpu_sub_system_axi/pad_core0_rst_b  \
+# x_cpu_sub_system_axi/pad_cpu_apb_base  \
+# x_cpu_sub_system_axi/pad_cpu_rvba  \
+
+
+# RETAIN
+########################################
+set_retention pd_cpu_ret \
+  -domain PD_CPU \
+  -retention_power_net VDD_CPU -retention_ground_net VSS
+
+set_retention_control pd_cpu_ret \
+  -domain PD_CPU \
+  -save_signal    {pmu_cpu_save high} \
+  -restore_signal {pmu_cpu_restore high}
+
+
+# ADD PORT STATE INFO
+#####################
+add_port_state VDD       -state {HV  1.00}
+
+add_port_state VDD_CPU   -state {HV  1.00}
+
+add_port_state cpu_sw/out -state {HV  1.00} \
+		          -state {OFF off}
+
+
+## CREATE PST
+#############
+create_pst soc_pst -supplies {VDD   VDD_CPU   VDD_CPU_SW}
+
+add_pst_state s_full_on  -pst soc_pst -state {HV  HV   HV}
+add_pst_state s_cpu_off  -pst soc_pst -state {HV  HV   OFF}
+
+
