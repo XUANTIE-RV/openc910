@@ -62,7 +62,10 @@ module tb();
   wire jtg_tdi;
   wire jtg_tdo;
   wire  pad_yy_gate_clk_en_b;
-  
+
+  reg [1023:0] inst_file = "inst.pat";
+  reg [1023:0] data_file = "data.pat";
+
   static integer FILE;
   
   wire uart0_sin;
@@ -133,8 +136,12 @@ module tb();
     end
   
     $display("\t********* Read program *********");
-    $readmemh("inst.pat", mem_inst_temp);
-    $readmemh("data.pat", mem_data_temp);
+    if ($value$plusargs("inst_file=%s", inst_file))
+      $display("Loading instruction memory from %0s", inst_file);
+    $readmemh(inst_file, mem_inst_temp);
+    if ($value$plusargs("data_file=%s", data_file))
+      $display("Loading data memory from %0s", data_file);
+    $readmemh(data_file, mem_data_temp);
   
     $display("\t********* Load program to memory *********");
     i=0;
