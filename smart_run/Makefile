@@ -22,6 +22,27 @@ include ./setup/env_check.mk
 SIM = iverilog
 DUMP = off
 
+# Generate C++ in executable form
+VERILATOR_FLAGS += -cc --exe
+# Generate makefile dependencies (not shown as complicates the Makefile)
+#VERILATOR_FLAGS += -MMD
+# Optimize
+VERILATOR_FLAGS += -Os -x-assign 0
+# lint-only
+VERILATOR_FLAGS += -lint-only
+# Warn abount lint issues; may not want this on less solid designs
+VERILATOR_FLAGS += -Wno-fatal
+# Make waveforms
+#VERILATOR_FLAGS += --trace
+## Check SystemVerilog assertions
+#VERILATOR_FLAGS += --assert
+## Generate coverage analysis
+#VERILATOR_FLAGS += --coverage
+# Run Verilator in debug mode
+#VERILATOR_FLAGS += --debug
+# Add this trace to get a backtrace in gdb
+#VERILATOR_FLAGS += --gdbbt
+
 ifeq ($(DUMP), on)
 SIM_DUMP :=
 else
@@ -51,19 +72,30 @@ else
     SIMULATOR_DEF := +define+no_warning +define+TSMC_NO_WARNING +define+VMC +define+NC_SIM 
     SIMULATOR_LOG := -l comp.nc.log
     else
-    ifeq ($(SIM), iverilog)
-      TIMESCALE := 
-      SIMULATOR_OPT := -o xuantie_core.vvp -Diverilog=1 -g2012 
-      SIMULATOR_DEF := -DIVERILOG_SIM
-      SIMULATOR_LOG := 
-    endif
+        ifeq ($(SIM), iverilog)
+          TIMESCALE := 
+          SIMULATOR_OPT := -o xuantie_core.vvp -Diverilog=1 -g2012 
+          SIMULATOR_DEF := -DIVERILOG_SIM
+          SIMULATOR_LOG := 
+        else
+            ifeq ($(SIM), verilator)
+              SIMULATOR_OPT := -Os -x-assign 0 --threads 16 -Wno-fatal
+              SIMULATOR_DEF := -cc --exe --top-module top --trace
+              SIMULATOR_LOG := 
+            else
+            endif
+        endif
     endif
 endif
 
 ifeq ($(SIM), iverilog)
-SIM_FILELIST := $(SIM_FILELIST) -f ${CODE_BASE_PATH}/gen_rtl/filelists/C910_asic_rtl.fl -c ../logical/filelists/smart.fl -c ../logical/filelists/tb.fl
+    SIM_FILELIST := $(SIM_FILELIST) -f ${CODE_BASE_PATH}/gen_rtl/filelists/C910_asic_rtl.fl -c ../logical/filelists/smart.fl -c ../logical/filelists/tb.fl
 else
-SIM_FILELIST := $(SIM_FILELIST) -f ../logical/filelists/sim.fl
+    ifeq ($(SIM), verilator)
+    SIM_FILELIST := $(SIM_FILELIST) -f ../logical/filelists/sim_verilator.fl
+    else
+    SIM_FILELIST := $(SIM_FILELIST) -f ../logical/filelists/sim.fl
+    endif
 endif
 
 compile:
@@ -79,13 +111,22 @@ else
         ifeq ($(SIM), iverilog)
 	  @cd ./work && iverilog $(TIMESCALE) $(SIMULATOR_OPT) $(SIMULATOR_DEF) $(SIM_FILELIST) $(SIM_DUMP) $(SIMULATOR_LOG)
         else
-	  @echo "  [THead-smart] Please specify SIM = vcs to use VCS, or SIM = nc to use irun ..."
+            ifeq ($(SIM), verilator)
+	      @cd ./work && verilator $(SIMULATOR_OPT) $(SIMULATOR_DEF) $(SIMULATOR_LOG) $(SIM_FILELIST)
+            else
+	      @echo "  [THead-smart] Please specify SIM = vcs to use VCS, or SIM = nc ,or SIM = verilator to use irun ..."
+            endif
         endif
     endif 
 endif 
 
+buildVerilator:
+	@cp ./logical/tb/Makefile_obj ./work/Makefile_obj
+	@cd ./work && make -j -C obj_dir -f ../Makefile_obj
 cleansim:
 	@cd ./work && rm -rf simv* csrc ucli.key *.vcs.log novas_dump.log *.fsdb
+cleanVerilator:
+	@cd ./work && rm -rf obj_dir/
 
 ################################################################################
 # Cases related
@@ -120,7 +161,11 @@ cleancase:
 # Combined flows
 ################################################################################
 # Execute one case
+runVerilator:
+	@cd ./work && obj_dir/Vtop
+
 runcase:
+	@make cleanVerilator
 ifeq ($(CASE),)
 	$(error Please specify CASE=xxx on the command line, like: \
         $(newline)   > make buildcase CASE=xxx... \
@@ -134,9 +179,14 @@ ifeq ($(SIM), vcs)
 	cd ./work && ./simv -l run.vcs.log $(SIMV_POWER_OPT)
 else
         ifeq ($(SIM), nc)	
-	cd ./work && irun -R -l run.irun.log
+		cd ./work && irun -R -l run.irun.log
         else
-	cd ./work && vvp xuantie_core.vvp 
+            ifeq ($(SIM), verilator)
+		make buildVerilator
+		cd ./work && obj_dir/Vtop	
+            else
+	        cd ./work && vvp xuantie_core.vvp 
+            endif
         endif
 endif
 else

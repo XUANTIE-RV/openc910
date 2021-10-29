@@ -250,7 +250,7 @@ reg     [1  :0]  memr_resp_f_3_2;
 reg     [3  :0]  memr_resp_f_err;       
 reg     [1  :0]  memw_cur_state;        
 reg     [1  :0]  memw_nxt_state;        
-reg              process;               
+reg              _process;               
 reg              rack_f;                
 reg              rresp_rdy_f;           
 reg              ru_miss_by_snpext;     
@@ -1017,16 +1017,16 @@ end
 always@(posedge fsm_clk or negedge cpurst_b)
 begin
   if (!cpurst_b)
-    process <= 1'b0;
+    _process <= 1'b0;
   else if (x_cen & !set_process)
-    process <= wns_raw | evict_raw;
-  else if (!process & set_process)
-    process <= 1'b1;
-  else if (process & clr_process)
-    process <= 1'b0;
+    _process <= wns_raw | evict_raw;
+  else if (!_process & set_process)
+    _process <= 1'b1;
+  else if (_process & clr_process)
+    _process <= 1'b0;
 end
 
-assign sab_in_process_x = process | set_process;
+assign sab_in_process_x = _process | set_process;
 
 //==========================================================
 //               L2C REQ FSM
