@@ -45,7 +45,7 @@ setup file about how to specify it:
 ## Notes
 
 ```
-The testbench supports iverilog, vcs and irun to run simulation and you can use Gtkwave or verdi
+The testbench supports Verilator(version is better newer than 4.215),iverilog, vcs and irun to run simulation and you can use Gtkwave or verdi
 to open the waveform under ./smart_run/work/ directory.
 
 You can get the debugger, IDE and SDK from the url:https://occ.t-head.cn/community/download?id=575997419775328256
