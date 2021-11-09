@@ -44,6 +44,27 @@ VERILATOR_FLAGS += -Wno-fatal
 # Add this trace to get a backtrace in gdb
 #VERILATOR_FLAGS += --gdbbt
 
+# Generate C++ in executable form
+VERILATOR_FLAGS += -cc --exe
+# Generate makefile dependencies (not shown as complicates the Makefile)
+#VERILATOR_FLAGS += -MMD
+# Optimize
+VERILATOR_FLAGS += -Os -x-assign 0
+# lint-only
+VERILATOR_FLAGS += -lint-only
+# Warn abount lint issues; may not want this on less solid designs
+VERILATOR_FLAGS += -Wno-fatal
+# Make waveforms
+#VERILATOR_FLAGS += --trace
+## Check SystemVerilog assertions
+#VERILATOR_FLAGS += --assert
+## Generate coverage analysis
+#VERILATOR_FLAGS += --coverage
+# Run Verilator in debug mode
+#VERILATOR_FLAGS += --debug
+# Add this trace to get a backtrace in gdb
+#VERILATOR_FLAGS += --gdbbt
+
 ifeq ($(DUMP), on)
 ifeq (${SIM}, verilator)
 SIM_DUMP := --trace
