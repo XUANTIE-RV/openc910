@@ -54,7 +54,7 @@ You can get the debugger, IDE and SDK from the url:https://occ.t-head.cn/communi
 
 ## Discussion
     If you are interested in participating in discussions or improving the "openXuantie" cores, you can scan the DingDing QR code below to join the discussion group.
-<img src="https://github.com/T-head-Semi/openc906/blob/main/doc/QR_code_openXuantie.png" />
+<img src="https://github.com/T-head-Semi/opene902/blob/main/doc/QR_code_openXuantie.png" />
 
 
 /*Copyright 2019-2021 T-Head Semiconductor Co., Ltd.
