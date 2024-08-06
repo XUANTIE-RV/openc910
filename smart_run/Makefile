@@ -268,11 +268,11 @@ help:
 	@echo "    make runcase CASE=dhry          : run case 'dhry' (by iverilog withtout dump) "; 
 	@echo "    make runcase CASE=dhry SIM=nc   : run case 'dhry' (by nc withtout dump) "; 
 	@echo "    make runcase CASE=dhry DUMP=on  : run case 'dhry' with dump "; 
-	@echo "    make runcase CASE=coremark SIM=verilator THREADS=8 	: run case 'coremark' without dump(by verilator) with 8 threads;
-	@echo "    make cleanVerilator		   			: clean the verilator generated file before Verilator operations;
-	@echo "    make compile SIM=verilator DUMP=on THREADS=8  	: run compile with dump (by Verilator with dump) with 8 threads;
-	@echo "    make buildVerilator             			: run build executable file with Verilator;
-	@echo "    make runVerilator	           			: run simulation file with Verilator;
+	@echo "    make runcase CASE=coremark SIM=verilator THREADS=8 	: run case 'coremark' without dump(by verilator) with 8 threads ";
+	@echo "    make cleanVerilator		   			: clean the verilator generated file before Verilator operations ";
+	@echo "    make compile SIM=verilator DUMP=on THREADS=8  	: run compile with dump (by Verilator with dump) with 8 threads ";
+	@echo "    make buildVerilator             			: run build executable file with Verilator ";
+	@echo "    make runVerilator	           			: run simulation file with Verilator ";
 	
 
 
