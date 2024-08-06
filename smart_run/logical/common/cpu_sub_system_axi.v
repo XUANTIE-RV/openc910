@@ -364,7 +364,7 @@ end
 // assign pad_plic_int_vld  = {{ 144 - 40{1'b0}}, xx_intc_vld[39:0]};
 assign pad_plic_int_vld[ 39 : 0] = xx_intc_vld[ 39 : 0];
 
-assign pad_plic_int_vld[144 - 1 : 32] = 'h0;
+assign pad_plic_int_vld[144 - 1 : 40] = 'h0;
 
 assign pad_plic_int_cfg  = 'b0;
 
