@@ -1448,7 +1448,7 @@ ct_fifo #(.WIDTH(3), .DEPTH(8), .PTR_W(3)) x_ct_ciu_wd_sel_fifo(
   .fifo_pop_data         (wd_sel_fifo_pop_bus     ),
   .fifo_pop_data_vld     (wd_sel_fifo_pop_bus_vld ),
   .fifo_full             (wd_sel_fifo_full        ),
-  .fifo_empty            (wd_sel_fifo_empty       ),
+  .fifo_empty            (                        ),
   .pad_yy_icg_scan_en  (pad_yy_icg_scan_en   ),
   .fifo_icg_en           (ciu_icg_en)
 );

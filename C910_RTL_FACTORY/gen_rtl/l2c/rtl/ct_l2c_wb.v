@@ -248,7 +248,7 @@ ct_fifo #(.WIDTH(14), .DEPTH(3), .PTR_W(2)) x_ct_l2c_resp_rfifo(
   .fifo_create_data    (rfifo_create_bus    ),
   .fifo_pop_data       (rfifo_pop_bus       ),
   .fifo_pop_data_vld   (rfifo_pop_bus_vld   ),
-  .fifo_full           (rfifo_full          ),
+  .fifo_full           (                    ),
   .fifo_empty          (rfifo_empty         ),
   .pad_yy_icg_scan_en(pad_yy_icg_scan_en),
   .fifo_icg_en         (l2c_icg_en          )
