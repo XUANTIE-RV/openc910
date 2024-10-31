@@ -3711,8 +3711,8 @@ assign inst1_src0_read_wb        = inst1_src0_read_data[1];
 assign inst1_src0_read_preg[6:0] = inst1_src0_read_data[8:2];
 assign inst1_src0_read_mla_rdy   = inst1_src0_read_data[9];
 
-//if source register index of instruction 0 is same with
-//destination register index of instruction 1, dependency
+//if source register index of instruction 1 is same with
+//destination register index of instruction 0, dependency
 //information is bypass from instruction 0 value
 //the normal source in split instruction with implicit dependency
 //should not match split destination
@@ -3867,8 +3867,8 @@ assign inst1_src1_read_rdy       = inst1_src1_read_data[0];
 assign inst1_src1_read_wb        = inst1_src1_read_data[1];
 assign inst1_src1_read_preg[6:0] = inst1_src1_read_data[8:2];
 
-//if source register index of instruction 0 is same with
-//destination register index of instruction 1, dependency
+//if source register index of instruction 1 is same with
+//destination register index of instruction 0, dependency
 //information is bypass from instruction 0 value
 //the normal source in split instruction with implicit dependency
 //should not match split destination
@@ -3999,8 +3999,8 @@ assign inst1_src2_read_wb        = inst1_dst_read_data[1];
 assign inst1_src2_read_preg[6:0] = inst1_dst_read_data[8:2];
 assign inst1_src2_read_mla_rdy   = inst1_dst_read_data[9];
 
-//if source register index of instruction 0 is same with
-//destination register index of instruction 1, dependency
+//if source register index of instruction 1 is same with
+//destination register index of instruction 0, dependency
 //information is bypass from instruction 0 value
 //the normal source in split instruction with implicit dependency
 //should not match split destination
