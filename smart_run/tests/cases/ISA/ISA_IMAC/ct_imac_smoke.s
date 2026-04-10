@@ -249,13 +249,13 @@ LUI:
       .option rvc
 .global AUIPC
 AUIPC:
+      li x3, 0xa006
       auipc x2, 0x0
-      li x3, 0xa00e
       c.add x2, x3
       auipc x4, 0xa
       bne x2, x4, TEST_FAIL
+      li x3, 0x80000008
       auipc x2, 0x0
-      li x3, 0x80000014
       addw x2, x3, x2
       auipc x4, 0x80000
       bne x2, x4, TEST_FAIL
