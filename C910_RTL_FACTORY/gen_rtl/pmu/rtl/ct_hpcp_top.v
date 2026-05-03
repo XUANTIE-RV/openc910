@@ -1294,25 +1294,25 @@ assign hpcp_cnt_en  = (tme[1:0] == 2'b00)
                  
 
 // enable counter
-assign mcycle_en    = !rtu_yy_xx_dbgon && !cnt_mode_dis && !mcntinhbt_value[0];
-assign minstret_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !mcntinhbt_value[2];
+assign mcycle_en    = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !mcntinhbt_value[0];
+assign minstret_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !mcntinhbt_value[2];
 
-assign mhpmcnt3_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[3]  && !mcntinhbt_value[3]  && (|mhpmevt3_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt4_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[4]  && !mcntinhbt_value[4]  && (|mhpmevt4_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt5_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[5]  && !mcntinhbt_value[5]  && (|mhpmevt5_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt6_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[6]  && !mcntinhbt_value[6]  && (|mhpmevt6_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt7_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[7]  && !mcntinhbt_value[7]  && (|mhpmevt7_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt8_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[8]  && !mcntinhbt_value[8]  && (|mhpmevt8_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt9_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[9]  && !mcntinhbt_value[9]  && (|mhpmevt9_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt10_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[10] && !mcntinhbt_value[10] && (|mhpmevt10_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt11_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[11] && !mcntinhbt_value[11] && (|mhpmevt11_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt12_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[12] && !mcntinhbt_value[12] && (|mhpmevt12_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt13_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[13] && !mcntinhbt_value[13] && (|mhpmevt13_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt14_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[14] && !mcntinhbt_value[14] && (|mhpmevt14_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt15_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[15] && !mcntinhbt_value[15] && (|mhpmevt15_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt16_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[16] && !mcntinhbt_value[16] && (|mhpmevt16_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt17_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[17] && !mcntinhbt_value[17] && (|mhpmevt17_value[HPMEVT_WIDTH-1:0]);
-assign mhpmcnt18_en = !rtu_yy_xx_dbgon && !cnt_mode_dis && !cnt_mask[18] && !mcntinhbt_value[18] && (|mhpmevt18_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt3_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[3]  && !mcntinhbt_value[3]  && (|mhpmevt3_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt4_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[4]  && !mcntinhbt_value[4]  && (|mhpmevt4_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt5_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[5]  && !mcntinhbt_value[5]  && (|mhpmevt5_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt6_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[6]  && !mcntinhbt_value[6]  && (|mhpmevt6_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt7_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[7]  && !mcntinhbt_value[7]  && (|mhpmevt7_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt8_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[8]  && !mcntinhbt_value[8]  && (|mhpmevt8_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt9_en  = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[9]  && !mcntinhbt_value[9]  && (|mhpmevt9_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt10_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[10] && !mcntinhbt_value[10] && (|mhpmevt10_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt11_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[11] && !mcntinhbt_value[11] && (|mhpmevt11_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt12_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[12] && !mcntinhbt_value[12] && (|mhpmevt12_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt13_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[13] && !mcntinhbt_value[13] && (|mhpmevt13_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt14_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[14] && !mcntinhbt_value[14] && (|mhpmevt14_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt15_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[15] && !mcntinhbt_value[15] && (|mhpmevt15_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt16_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[16] && !mcntinhbt_value[16] && (|mhpmevt16_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt17_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[17] && !mcntinhbt_value[17] && (|mhpmevt17_value[HPMEVT_WIDTH-1:0]);
+assign mhpmcnt18_en = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && !cnt_mask[18] && !mcntinhbt_value[18] && (|mhpmevt18_value[HPMEVT_WIDTH-1:0]);
                                                             
 //==============================================================================
 //                Counter Adders
@@ -4293,10 +4293,10 @@ assign l2cnt_ra_inhbt[31:0] = mcntinhbt_value[31:0] >> cnt0_event_index[5:0];
 assign l2cnt_rm_inhbt[31:0] = mcntinhbt_value[31:0] >> cnt1_event_index[5:0];
 assign l2cnt_wa_inhbt[31:0] = mcntinhbt_value[31:0] >> cnt2_event_index[5:0];
 assign l2cnt_wm_inhbt[31:0] = mcntinhbt_value[31:0] >> cnt3_event_index[5:0];
-assign l2cnt_ra_cnt_en      = !cnt0_event_index[5] && !l2cnt_ra_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis && hpcp_cnt_en;
-assign l2cnt_rm_cnt_en      = !cnt1_event_index[5] && !l2cnt_rm_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis && hpcp_cnt_en;
-assign l2cnt_wa_cnt_en      = !cnt2_event_index[5] && !l2cnt_wa_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis && hpcp_cnt_en;
-assign l2cnt_wm_cnt_en      = !cnt3_event_index[5] && !l2cnt_wm_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis && hpcp_cnt_en;
+assign l2cnt_ra_cnt_en      = !cnt0_event_index[5] && !l2cnt_ra_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && hpcp_cnt_en;
+assign l2cnt_rm_cnt_en      = !cnt1_event_index[5] && !l2cnt_rm_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && hpcp_cnt_en;
+assign l2cnt_wa_cnt_en      = !cnt2_event_index[5] && !l2cnt_wa_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && hpcp_cnt_en;
+assign l2cnt_wm_cnt_en      = !cnt3_event_index[5] && !l2cnt_wm_inhbt[0] && !rtu_yy_xx_dbgon && !cnt_mode_dis_pre && hpcp_cnt_en;
 
 assign l2cnt_en[3:0]       = {l2cnt_wm_cnt_en,l2cnt_wa_cnt_en,l2cnt_rm_cnt_en,l2cnt_ra_cnt_en};
 
@@ -4342,7 +4342,7 @@ assign hpcp_cp0_data[63:0] = (l2cnt_sel && cnt_bit_mask[0])
 assign hpcp_cp0_int_vld    = |(cntinten_value[31:0] & cntof_int[31:0]);
 assign hpcp_cp0_sce        = sce;
 
-assign hpcp_xx_cnt_en   = !rtu_yy_xx_dbgon && !cnt_mode_dis;
+assign hpcp_xx_cnt_en   = !rtu_yy_xx_dbgon && !cnt_mode_dis_pre;
    
 //==========================================================
 // Output to BIU
