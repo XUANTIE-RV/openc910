@@ -72,3 +72,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 */
+
+## Further Reading
+
+For additional documentation and learning resources related to RISC-V processor development, refer to the following resources:
+
+* [XuanTie C910 Technical Resources](https://www.xrvm.cn/product/xuantie/C910)
