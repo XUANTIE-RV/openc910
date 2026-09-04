@@ -157,7 +157,9 @@ begin
   else if(pmp_updt_pmp0cfg)
   begin
     pmp0cfg_readable       <= cp0_pmp_wdata[0];
-    pmp0cfg_writable       <= cp0_pmp_wdata[1];
+    // W=1,R=0 is a reserved PMP permission encoding.  Clear W in the
+    // WARL representation instead of exposing a W-only permission.
+    pmp0cfg_writable       <= cp0_pmp_wdata[1] && cp0_pmp_wdata[0];
     pmp0cfg_executeable    <= cp0_pmp_wdata[2];
     pmp0cfg_addr_mode[1:0] <= cp0_pmp_wdata[4:3];
     pmp0cfg_lock           <= cp0_pmp_wdata[7];
@@ -186,7 +188,7 @@ begin
   else if(pmp_updt_pmp1cfg)
   begin
     pmp1cfg_readable       <= cp0_pmp_wdata[8];
-    pmp1cfg_writable       <= cp0_pmp_wdata[9];
+    pmp1cfg_writable       <= cp0_pmp_wdata[9] && cp0_pmp_wdata[8];
     pmp1cfg_executeable    <= cp0_pmp_wdata[10];
     pmp1cfg_addr_mode[1:0] <= cp0_pmp_wdata[12:11];
     pmp1cfg_lock           <= cp0_pmp_wdata[15];
@@ -215,7 +217,7 @@ begin
   else if(pmp_updt_pmp2cfg)
   begin
     pmp2cfg_readable       <= cp0_pmp_wdata[16];
-    pmp2cfg_writable       <= cp0_pmp_wdata[17];
+    pmp2cfg_writable       <= cp0_pmp_wdata[17] && cp0_pmp_wdata[16];
     pmp2cfg_executeable    <= cp0_pmp_wdata[18];
     pmp2cfg_addr_mode[1:0] <= cp0_pmp_wdata[20:19];
     pmp2cfg_lock           <= cp0_pmp_wdata[23];
@@ -244,7 +246,7 @@ begin
   else if(pmp_updt_pmp3cfg)
   begin
     pmp3cfg_readable       <= cp0_pmp_wdata[24];
-    pmp3cfg_writable       <= cp0_pmp_wdata[25];
+    pmp3cfg_writable       <= cp0_pmp_wdata[25] && cp0_pmp_wdata[24];
     pmp3cfg_executeable    <= cp0_pmp_wdata[26];
     pmp3cfg_addr_mode[1:0] <= cp0_pmp_wdata[28:27];
     pmp3cfg_lock           <= cp0_pmp_wdata[31];
@@ -273,7 +275,7 @@ begin
   else if(pmp_updt_pmp4cfg)
   begin
     pmp4cfg_readable        <= cp0_pmp_wdata[32];
-    pmp4cfg_writable        <= cp0_pmp_wdata[33];
+    pmp4cfg_writable        <= cp0_pmp_wdata[33] && cp0_pmp_wdata[32];
     pmp4cfg_executeable     <= cp0_pmp_wdata[34];
     pmp4cfg_addr_mode[1:0]  <= cp0_pmp_wdata[36:35];
     pmp4cfg_lock            <= cp0_pmp_wdata[39];
@@ -302,7 +304,7 @@ begin
   else if(pmp_updt_pmp5cfg)
   begin
     pmp5cfg_readable       <= cp0_pmp_wdata[40];
-    pmp5cfg_writable       <= cp0_pmp_wdata[41];
+    pmp5cfg_writable       <= cp0_pmp_wdata[41] && cp0_pmp_wdata[40];
     pmp5cfg_executeable    <= cp0_pmp_wdata[42];
     pmp5cfg_addr_mode[1:0] <= cp0_pmp_wdata[44:43];
     pmp5cfg_lock           <= cp0_pmp_wdata[47];
@@ -331,7 +333,7 @@ begin
   else if(pmp_updt_pmp6cfg)
   begin
     pmp6cfg_readable       <= cp0_pmp_wdata[48];
-    pmp6cfg_writable       <= cp0_pmp_wdata[49];
+    pmp6cfg_writable       <= cp0_pmp_wdata[49] && cp0_pmp_wdata[48];
     pmp6cfg_executeable    <= cp0_pmp_wdata[50];
     pmp6cfg_addr_mode[1:0] <= cp0_pmp_wdata[52:51];
     pmp6cfg_lock           <= cp0_pmp_wdata[55];
@@ -360,7 +362,7 @@ begin
   else if(pmp_updt_pmp7cfg)
   begin
     pmp7cfg_readable       <= cp0_pmp_wdata[56];
-    pmp7cfg_writable       <= cp0_pmp_wdata[57];
+    pmp7cfg_writable       <= cp0_pmp_wdata[57] && cp0_pmp_wdata[56];
     pmp7cfg_executeable    <= cp0_pmp_wdata[58];
     pmp7cfg_addr_mode[1:0] <= cp0_pmp_wdata[60:59];
     pmp7cfg_lock           <= cp0_pmp_wdata[63];
@@ -538,5 +540,3 @@ assign pmp_cp0_data[63:0]  = {64{pmp_csr_sel[0]}}  & pmpcfg0_value[63:0]
 
 // &ModuleEnd; @765
 endmodule
-
-
