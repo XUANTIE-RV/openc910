@@ -264,6 +264,7 @@ assign icc_clk_en = sq_icc_req
                     ||  cp0_lsu_dcache_inv
                     ||  cp0_lsu_dcache_clr
                     ||  cp0_lsu_dcache_read_req
+                    ||  icc_inv
                     ||  !icc_idle;
 // &Instance("gated_clk_cell", "x_lsu_icc_gated_clk"); @48
 gated_clk_cell  x_lsu_icc_gated_clk (
@@ -422,14 +423,14 @@ assign icc_start    = icc_idle
                       &&  (sq_icc_req
                           ||  cp0_lsu_dcache_clr
                           ||  cp0_lsu_dcache_inv
-                          ||  cp0_lsu_dcache_read_req);
+                          ||  cp0_lsu_dcache_read_req
+                          ||  icc_inv);
 assign icc_set_clr  = icc_idle
                       &&  (sq_icc_req &&  sq_icc_clr
                           ||  cp0_lsu_dcache_clr);
 
-assign icc_set_inv  = icc_idle
-                      &&  (sq_icc_req &&  sq_icc_inv
-                          ||  cp0_lsu_dcache_inv);
+assign icc_set_inv  = (icc_idle && sq_icc_req && sq_icc_inv)
+                      || cp0_lsu_dcache_inv;
 
 //==========================================================
 //                  State 1 : wait for ready
@@ -568,5 +569,4 @@ assign lsu_had_icc_state[2:0] = icc_state[2:0];
 
 // &ModuleEnd; @354
 endmodule
-
 
