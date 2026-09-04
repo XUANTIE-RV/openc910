@@ -1127,7 +1127,7 @@ gated_clk_cell  x_cp0_cdata_gated_clk (
   .clk_out            (cdata_clk         ),
   .external_en        (1'b0              ),
   .global_en          (cp0_yy_clk_en     ),
-  .local_en           (cins_r            ),
+  .local_en           (cins_r || cp0_pmp_wreg),
   .module_en          (regs_xx_icg_en    ),
   .pad_yy_icg_scan_en (pad_yy_icg_scan_en)
 );
@@ -3336,6 +3336,11 @@ begin
     cdata0[63:0] <= 64'b0;
     cdata1[63:0] <= 64'b0;
   end
+  // Do not retain data captured before a PMP permission change.
+  else if (cp0_pmp_wreg) begin
+    cdata0[63:0] <= 64'b0;
+    cdata1[63:0] <= 64'b0;
+  end
   else if (cdata_data_vld) begin
     cdata0[63:0] <= cdata_read_data[63:0];
     cdata1[63:0] <= cdata_read_data[127:64];
@@ -4216,7 +4221,12 @@ assign cp0_lsu_ctc_flush_dis         = ctc_flush_dis;
 
 // Dcache Clear and Invalid
 assign cp0_lsu_dcache_clr            = clr && sel[1];
-assign cp0_lsu_dcache_inv            = dcache_inv && sel[1] || iui_regs_rst_inv_d;
+// A PMP update can revoke access to lines already resident in D-cache.  Flush
+// the cache on every PMP CSR write so cache-index diagnostics cannot read a
+// line after its PMP permissions have been tightened.
+assign cp0_lsu_dcache_inv            = dcache_inv && sel[1]
+                                     || iui_regs_rst_inv_d
+                                     || cp0_pmp_wreg;
 
 // Dcache Read Cache Line Request
 assign cp0_lsu_dcache_read_req         = cins_r && (cindex_rid_dcache_st_tag
@@ -4390,5 +4400,3 @@ assign cp0_pad_mstatus[63:0] = mstatus_value[63:0];
 
 // &ModuleEnd; @4181
 endmodule
-
-
