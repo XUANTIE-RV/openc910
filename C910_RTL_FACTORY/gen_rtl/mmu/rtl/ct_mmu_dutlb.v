@@ -176,8 +176,8 @@ output          mmu_lsu_stall0;
 output          mmu_lsu_stall1;          
 output          mmu_lsu_tlb_busy;        
 output  [11:0]  mmu_lsu_tlb_wakeup;      
-output  [27:0]  mmu_pmp_pa0;             
-output  [27:0]  mmu_pmp_pa1;             
+output  [28:0]  mmu_pmp_pa0;             
+output  [28:0]  mmu_pmp_pa1;             
 output  [27:0]  mmu_sysmap_pa0;          
 output  [27:0]  mmu_sysmap_pa1;          
 
@@ -415,8 +415,8 @@ wire            mmu_lsu_stall0;
 wire            mmu_lsu_stall1;          
 wire            mmu_lsu_tlb_busy;        
 wire    [11:0]  mmu_lsu_tlb_wakeup;      
-wire    [27:0]  mmu_pmp_pa0;             
-wire    [27:0]  mmu_pmp_pa1;             
+wire    [28:0]  mmu_pmp_pa0;             
+wire    [28:0]  mmu_pmp_pa1;             
 wire    [27:0]  mmu_sysmap_pa0;          
 wire    [27:0]  mmu_sysmap_pa1;          
 wire            pad_yy_icg_scan_en;      
@@ -1538,5 +1538,4 @@ assign dutlb_ptw_wfc             = dutlb_wfc;
 
 // &ModuleEnd; @451
 endmodule
-
 

@@ -212,7 +212,7 @@ output           mmu_lsu_pa2_err;
 output           mmu_lsu_pa2_vld;         
 output           mmu_lsu_sec2;            
 output           mmu_lsu_share2;          
-output  [27 :0]  mmu_pmp_pa4;             
+output  [28 :0]  mmu_pmp_pa4;             
 output  [27 :0]  mmu_sysmap_pa4;          
 
 // &Regs; @28
@@ -389,7 +389,7 @@ wire             mmu_lsu_pa2_err;
 wire             mmu_lsu_pa2_vld;         
 wire             mmu_lsu_sec2;            
 wire             mmu_lsu_share2;          
-wire    [27 :0]  mmu_pmp_pa4;             
+wire    [28 :0]  mmu_pmp_pa4;             
 wire    [27 :0]  mmu_sysmap_pa4;          
 wire    [26 :0]  pa_offset;               
 wire             pad_yy_icg_scan_en;      
@@ -1407,7 +1407,7 @@ assign jtlb_arb_pfu_cmplt = (pfu_ok_st || pfu_deny_st) && !pfu_off_chk;
 assign jtlb_arb_pfu_vpn[VPN_WIDTH-1:0] = lsu_mmu_va2[VPN_WIDTH-1:0];
 
 // addr to pmp
-assign mmu_pmp_pa4[PPN_WIDTH-1:0] = pfu_pa_buf[PPN_WIDTH-1:0];
+assign mmu_pmp_pa4[PPN_WIDTH:0] = {pfu_pa_buf[PPN_WIDTH-1:0], 1'b0};
 
 // addr to sysmap
 assign mmu_sysmap_pa4[PPN_WIDTH-1:0] = lsu_mmu_va2[PPN_WIDTH-1:0];
@@ -1452,5 +1452,3 @@ assign jtlb_top_utlb_pavld = tc_pa_vld || ptw_jtlb_ref_data_vld;
 
 // &ModuleEnd; @1071
 endmodule
-
-

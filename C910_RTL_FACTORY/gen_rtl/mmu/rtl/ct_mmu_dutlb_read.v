@@ -251,7 +251,7 @@ output          mmu_lsu_sec_x;
 output          mmu_lsu_sh_x;             
 output          mmu_lsu_so_x;             
 output          mmu_lsu_stall_x;          
-output  [27:0]  mmu_pmp_pa_x;             
+output  [28:0]  mmu_pmp_pa_x;             
 output  [27:0]  mmu_sysmap_pa_x;          
 output  [26:0]  utlb_req_vpn_x;           
 
@@ -398,7 +398,7 @@ wire            mmu_lsu_sec_x;
 wire            mmu_lsu_sh_x;             
 wire            mmu_lsu_so_x;             
 wire            mmu_lsu_stall_x;          
-wire    [27:0]  mmu_pmp_pa_x;             
+wire    [28:0]  mmu_pmp_pa_x;             
 wire    [27:0]  mmu_sysmap_pa_x;          
 wire    [17:0]  pa_offset;                
 wire            pabuf_clk;                
@@ -769,7 +769,7 @@ end
 
 assign dutlb_va_chg_x = lsu_va_chg;
 
-assign mmu_pmp_pa_x[PPN_WIDTH-1:0] = dutlb_pa_buf[PPN_WIDTH-1:0];
+assign mmu_pmp_pa_x[PPN_WIDTH:0] = {dutlb_pa_buf[PPN_WIDTH-1:0], lsu_mmu_va_x[11]};
 
 assign utlb_req_vpn_x[VPN_WIDTH-1:0] = lsu_mmu_va_x[VPN_WIDTH+11:12];
 
@@ -777,5 +777,3 @@ assign mmu_sysmap_pa_x[PPN_WIDTH-1:0] = lsu_mmu_va_x[VPN_WIDTH+12:12];
 
 // &ModuleEnd; @337
 endmodule
-
-
