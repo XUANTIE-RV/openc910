@@ -670,11 +670,11 @@ wire             mmu_lsu_tlb_busy;
 wire             mmu_lsu_tlb_inv_done;                
 wire    [11 :0]  mmu_lsu_tlb_wakeup;                  
 wire             mmu_pmp_fetch3;                      
-wire    [27 :0]  mmu_pmp_pa0;                         
-wire    [27 :0]  mmu_pmp_pa1;                         
-wire    [27 :0]  mmu_pmp_pa2;                         
-wire    [27 :0]  mmu_pmp_pa3;                         
-wire    [27 :0]  mmu_pmp_pa4;                         
+wire    [28 :0]  mmu_pmp_pa0;                         
+wire    [28 :0]  mmu_pmp_pa1;                         
+wire    [28 :0]  mmu_pmp_pa2;                         
+wire    [28 :0]  mmu_pmp_pa3;                         
+wire    [28 :0]  mmu_pmp_pa4;                         
 wire             mmu_rst_b;                           
 wire             mmu_xx_mmu_en;                       
 wire             mmu_yy_xx_no_op;                     
@@ -2027,6 +2027,5 @@ ct_clk_top  x_ct_clk_top (
 
 // &ModuleEnd; @100
 endmodule
-
 
 

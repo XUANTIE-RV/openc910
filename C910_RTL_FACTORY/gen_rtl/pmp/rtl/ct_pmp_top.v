@@ -48,11 +48,11 @@ input   [1 :0]  cp0_yy_priv_mode;
 input           cpurst_b;          
 input           forever_cpuclk;    
 input           mmu_pmp_fetch3;    
-input   [27:0]  mmu_pmp_pa0;       
-input   [27:0]  mmu_pmp_pa1;       
-input   [27:0]  mmu_pmp_pa2;       
-input   [27:0]  mmu_pmp_pa3;       
-input   [27:0]  mmu_pmp_pa4;       
+input   [28:0]  mmu_pmp_pa0;       
+input   [28:0]  mmu_pmp_pa1;       
+input   [28:0]  mmu_pmp_pa2;       
+input   [28:0]  mmu_pmp_pa3;       
+input   [28:0]  mmu_pmp_pa4;       
 input           pad_yy_icg_scan_en; 
 output  [63:0]  pmp_cp0_data;      
 output  [3 :0]  pmp_mmu_flg0;      
@@ -77,11 +77,11 @@ wire            cpurst_b;
 wire    [1 :0]  cur_priv_mode;     
 wire            forever_cpuclk;    
 wire            mmu_pmp_fetch3;    
-wire    [27:0]  mmu_pmp_pa0;       
-wire    [27:0]  mmu_pmp_pa1;       
-wire    [27:0]  mmu_pmp_pa2;       
-wire    [27:0]  mmu_pmp_pa3;       
-wire    [27:0]  mmu_pmp_pa4;       
+wire    [28:0]  mmu_pmp_pa0;       
+wire    [28:0]  mmu_pmp_pa1;       
+wire    [28:0]  mmu_pmp_pa2;       
+wire    [28:0]  mmu_pmp_pa3;       
+wire    [28:0]  mmu_pmp_pa4;       
 wire            pad_yy_icg_scan_en; 
 wire    [63:0]  pmp_cp0_data;      
 wire    [17:0]  pmp_csr_sel;       
@@ -340,5 +340,4 @@ ct_pmp_acc  x_ct_pmp_acc4 (
 
 // &ModuleEnd; @170
 endmodule
-
 

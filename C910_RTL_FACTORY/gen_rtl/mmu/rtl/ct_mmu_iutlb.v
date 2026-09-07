@@ -104,7 +104,7 @@ output  [27:0]  mmu_ifu_pa;
 output          mmu_ifu_pavld;          
 output          mmu_ifu_pgflt;          
 output          mmu_ifu_sec;            
-output  [27:0]  mmu_pmp_pa2;            
+output  [28:0]  mmu_pmp_pa2;            
 output  [27:0]  mmu_sysmap_pa2;         
 
 // &Regs; @29
@@ -457,7 +457,7 @@ wire    [27:0]  mmu_ifu_pa;
 wire            mmu_ifu_pavld;          
 wire            mmu_ifu_pgflt;          
 wire            mmu_ifu_sec;            
-wire    [27:0]  mmu_pmp_pa2;            
+wire    [28:0]  mmu_pmp_pa2;            
 wire    [27:0]  mmu_sysmap_pa2;         
 wire    [27:0]  pa_fin;                 
 wire    [26:0]  pa_offset;              
@@ -2285,7 +2285,7 @@ begin
     iutlb_pa_buf[PPN_WIDTH-1:0] <= iutlb_pa_aft_bypass[PPN_WIDTH-1:0];
 end
 
-assign mmu_pmp_pa2[PPN_WIDTH-1:0] = iutlb_pa_buf[PPN_WIDTH-1:0];
+assign mmu_pmp_pa2[PPN_WIDTH:0] = {iutlb_pa_buf[PPN_WIDTH-1:0], ifu_mmu_va[11]};
 
 
 //----------------------------------------------------------
@@ -2336,5 +2336,3 @@ assign iutlb_ptw_wfc             = iutlb_wfc;
 
 // &ModuleEnd; @899
 endmodule
-
-

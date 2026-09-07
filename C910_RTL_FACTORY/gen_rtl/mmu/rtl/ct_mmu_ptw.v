@@ -105,7 +105,7 @@ output          mmu_lsu_data_req;
 output  [39:0]  mmu_lsu_data_req_addr; 
 output          mmu_lsu_data_req_size; 
 output          mmu_pmp_fetch3;       
-output  [27:0]  mmu_pmp_pa3;          
+output  [28:0]  mmu_pmp_pa3;          
 output  [27:0]  mmu_sysmap_pa3;       
 output  [3 :0]  ptw_arb_bank_sel;     
 output  [41:0]  ptw_arb_data_din;     
@@ -172,7 +172,7 @@ wire            mmu_lsu_data_req;
 wire    [39:0]  mmu_lsu_data_req_addr; 
 wire            mmu_lsu_data_req_size; 
 wire            mmu_pmp_fetch3;       
-wire    [27:0]  mmu_pmp_pa3;          
+wire    [28:0]  mmu_pmp_pa3;          
 wire    [27:0]  mmu_sysmap_pa3;       
 wire            pad_yy_icg_scan_en;   
 wire    [3 :0]  pmp_mmu_flg3;         
@@ -752,7 +752,7 @@ assign mmu_sysmap_pa3[PPN_WIDTH-1:0] = ptw_req_addr[PPN_WIDTH+11:12];
 //==========================================================
 //                  Interface to PMP
 //==========================================================
-assign mmu_pmp_pa3[PPN_WIDTH-1:0] = ptw_req_addr[PPN_WIDTH+11:12];
+assign mmu_pmp_pa3[PPN_WIDTH:0] = {ptw_req_addr[PPN_WIDTH+11:12], ptw_req_addr[11]};
 assign mmu_pmp_fetch3             = ptw_fetch_type;
 
 
@@ -802,5 +802,4 @@ assign ptw_top_imiss       = ptw_fetch_type;
 
 // &ModuleEnd; @554
 endmodule
-
 

@@ -33,7 +33,7 @@ module ct_pmp_acc(
 // &Ports; @25
 input   [1 :0]  cp0_pmp_mpp;        
 input   [1 :0]  cur_priv_mode;      
-input   [27:0]  mmu_pmp_pa_y;       
+input   [28:0]  mmu_pmp_pa_y;       
 input           pmp_mprv_status_y;  
 input   [28:0]  pmpaddr0_value;     
 input   [28:0]  pmpaddr1_value;     
@@ -79,7 +79,7 @@ wire            mmu_addr_ge_upaddr4;
 wire            mmu_addr_ge_upaddr5; 
 wire            mmu_addr_ge_upaddr6; 
 wire            mmu_addr_ge_upaddr7; 
-wire    [27:0]  mmu_pmp_pa_y;       
+wire    [28:0]  mmu_pmp_pa_y;       
 wire    [3 :0]  pmp_default_flg;    
 wire    [15:0]  pmp_hit;            
 wire            pmp_mmu_hit0;       
@@ -302,5 +302,4 @@ end
 
 // &ModuleEnd; @168
 endmodule
-
 

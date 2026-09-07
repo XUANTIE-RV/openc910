@@ -233,11 +233,11 @@ output          mmu_lsu_tlb_busy;
 output          mmu_lsu_tlb_inv_done;       
 output  [11:0]  mmu_lsu_tlb_wakeup;         
 output          mmu_pmp_fetch3;             
-output  [27:0]  mmu_pmp_pa0;                
-output  [27:0]  mmu_pmp_pa1;                
-output  [27:0]  mmu_pmp_pa2;                
-output  [27:0]  mmu_pmp_pa3;                
-output  [27:0]  mmu_pmp_pa4;                
+output  [28:0]  mmu_pmp_pa0;                
+output  [28:0]  mmu_pmp_pa1;                
+output  [28:0]  mmu_pmp_pa2;                
+output  [28:0]  mmu_pmp_pa3;                
+output  [28:0]  mmu_pmp_pa4;                
 output          mmu_xx_mmu_en;              
 output          mmu_yy_xx_no_op;            
 
@@ -416,11 +416,11 @@ wire            mmu_lsu_tlb_busy;
 wire            mmu_lsu_tlb_inv_done;       
 wire    [11:0]  mmu_lsu_tlb_wakeup;         
 wire            mmu_pmp_fetch3;             
-wire    [27:0]  mmu_pmp_pa0;                
-wire    [27:0]  mmu_pmp_pa1;                
-wire    [27:0]  mmu_pmp_pa2;                
-wire    [27:0]  mmu_pmp_pa3;                
-wire    [27:0]  mmu_pmp_pa4;                
+wire    [28:0]  mmu_pmp_pa0;                
+wire    [28:0]  mmu_pmp_pa1;                
+wire    [28:0]  mmu_pmp_pa2;                
+wire    [28:0]  mmu_pmp_pa3;                
+wire    [28:0]  mmu_pmp_pa4;                
 wire    [27:0]  mmu_sysmap_pa0;             
 wire    [27:0]  mmu_sysmap_pa1;             
 wire    [27:0]  mmu_sysmap_pa2;             
@@ -1129,6 +1129,5 @@ assign mmu_had_debug_info[33:0] = {iutlb_top_ref_cur_st[1:0],
 
 // &ModuleEnd; @189
 endmodule
-
 
 

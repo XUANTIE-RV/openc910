@@ -24,7 +24,7 @@ module ct_pmp_comp_hit(
 // &Ports; @25
 input   [1 :0]  addr_match_mode_x;   
 input           mmu_addr_ge_bottom_x; 
-input   [27:0]  mmu_pmp_pa_y;        
+input   [28:0]  mmu_pmp_pa_y;        
 input   [28:0]  pmpaddr_x_value;     
 output          mmu_addr_ge_upaddr_x; 
 output          pmp_mmu_hit_x;       
@@ -38,10 +38,10 @@ wire    [1 :0]  addr_match_mode_x;
 wire            mmu_addr_ge_bottom_x; 
 wire            mmu_addr_ge_upaddr_x; 
 wire            mmu_addr_ls_top;     
-wire    [28:0]  mmu_comp_adder;      
+wire    [29:0]  mmu_comp_adder;      
 wire            mmu_na4_addr_match;  
 wire            mmu_napot_addr_match; 
-wire    [27:0]  mmu_pmp_pa_y;        
+wire    [28:0]  mmu_pmp_pa_y;        
 wire            mmu_tor_addr_match;  
 wire    [28:0]  pmpaddr_x_value;     
 
@@ -72,16 +72,17 @@ end
 
 
 //1. TOR mode : pmpaddr_x_value[i-1]<= addr < pmpaddr_x_value[i]
-assign mmu_comp_adder[ADDR_WIDTH:0] = {1'b0,mmu_pmp_pa_y[ADDR_WIDTH-1:0]} - 
-                                      {1'b0,pmpaddr_x_value[ADDR_WIDTH:1]};
-assign mmu_addr_ls_top      = mmu_comp_adder[ADDR_WIDTH];
+assign mmu_comp_adder[29:0] = {1'b0,mmu_pmp_pa_y[28:0]} -
+                               {1'b0,pmpaddr_x_value[28:0]};
+assign mmu_addr_ls_top      = mmu_comp_adder[29];
 assign mmu_tor_addr_match   = mmu_addr_ge_bottom_x && mmu_addr_ls_top;
 
 // for next entry
-assign mmu_addr_ge_upaddr_x  = !mmu_comp_adder[ADDR_WIDTH];
+assign mmu_addr_ge_upaddr_x  = !mmu_comp_adder[29];
 
 //2. NAPOT : addr &addr_mask == pmpaddr_x_value & addr_mask
-assign mmu_napot_addr_match = (addr_mask[ADDR_WIDTH-1:0] & mmu_pmp_pa_y[ADDR_WIDTH-1:0]) == (addr_mask[ADDR_WIDTH-1:0] & pmpaddr_x_value[ADDR_WIDTH:1]);
+assign mmu_napot_addr_match = (addr_mask[ADDR_WIDTH-1:0] & mmu_pmp_pa_y[28:1]) ==
+                               (addr_mask[ADDR_WIDTH-1:0] & pmpaddr_x_value[28:1]);
 //assign mmu_napot_addr_match = (addr_mask[ADDR_WIDTH-1:0] & mmu_pmp_pa_y[ADDR_WIDTH-1:0]) == pmpaddr_x_value[ADDR_WIDTH:1];
 
 //3. NA4 : addr[31:2] == pmpaddr_x_value[29:0]
@@ -132,5 +133,4 @@ end
 
 // &ModuleEnd; @104
 endmodule
-
 
