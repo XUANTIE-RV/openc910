@@ -491,10 +491,10 @@ assign mmu_lsu_page_fault_x = dutlb_page_fault && !dutlb_off_hit;
 assign mmu_lsu_access_fault_x = jtlb_acc_fault_flop
                             || !pmp_mmu_flg_x[0] && (pmp_read_type || dutlb_ori_read_x)
                                 && !(cp0_mach_mode && !pmp_mmu_flg_x[3])  // L-bit for M-Mode
-                                && pmp_flg_vld
+                                && (pmp_flg_vld || dutlb_off_hit && lsu_mmu_va_vld_x)
                             || !pmp_mmu_flg_x[1] && !pmp_read_type
                                 && !(cp0_mach_mode && !pmp_mmu_flg_x[3])  // L-bit for M-Mode
-                                && pmp_flg_vld;
+                                && (pmp_flg_vld || dutlb_off_hit && lsu_mmu_va_vld_x);
 //assign mmu_lsu_access_fault_short_x = jtlb_acc_fault_flop || !pmp_mmu_flg_x[0] 
 //                                                          || !pmp_mmu_flg_x[1];
 assign dutlb_acc_flt_x = jtlb_acc_fault_flop;
@@ -777,5 +777,3 @@ assign mmu_sysmap_pa_x[PPN_WIDTH-1:0] = lsu_mmu_va_x[VPN_WIDTH+12:12];
 
 // &ModuleEnd; @337
 endmodule
-
-
